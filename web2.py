@@ -6,6 +6,7 @@ import functions
 
 todos = functions.get_todos()
 
+st.set_page_config(layout="wide")
 
 def add_todo():
     # todo_local = st.session_state["new_todo"].strip().capitalize()
@@ -31,7 +32,11 @@ def complete_todo(key):
 
 st.title("Mi App Tareas")
 st.subheader("Esta es mi todo app.")
-st.write("Esta app incrementa tu productividad.")
+st.write("Esta app incrementa tu <b>productividad</b>",
+         unsafe_allow_html=True)
+
+st.text_input(label="Entra una tarea:", placeholder="Añade nueva tarea...",
+              on_change=add_todo, key='new_todo')
 
 for index, todo in enumerate(todos):
     checkbox = st.checkbox(todo, key=index, on_change=complete_todo, args=(str(index)),
@@ -41,8 +46,5 @@ for index, todo in enumerate(todos):
         functions.write_todos(todos)
         del st.session_state[todo]
         st.rerun()
-
-st.text_input(label="Entra una tarea:", placeholder="Añade nueva tarea...",
-              on_change=add_todo, key='new_todo')
 
 st.session_state
